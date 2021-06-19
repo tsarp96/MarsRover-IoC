@@ -5,7 +5,7 @@ using MarsRoverTunaSarp.Services;
 
 namespace MarsRoverTest_NUnit
 {
-    public class Tests
+    public class RoverTest
     {
         [SetUp]
         public void Setup()
@@ -80,19 +80,6 @@ namespace MarsRoverTest_NUnit
                     Assert.That(sut.Position.Y, Is.EqualTo(y));
                     break;
             }
-        }
-
-        [Test]
-        public void TraceRoute_BoundryBreachDetected_ShouldThrowAnException()
-        {
-            //Arrange
-            Plateau plateau = new Plateau(5, 5);
-            Rover rover = new Rover(new Position(0, 0, (int)Compass.S));
-            string route = "MLM";
-            ExplorationService sut = new ExplorationService(rover, plateau, route);
-            //Act & Assert
-            Assert.Throws<Exception>(() => sut.TraceRoute());
-            
         }
     }
 }
