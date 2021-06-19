@@ -11,11 +11,15 @@ namespace MarsRoverTunaSarp.Services
         private string route;
         private Plateau plateau;
 
-        public ExplorationService(Rover rover, Plateau plateau, string path)
+        public ExplorationService(Rover rover, Plateau plateau, string route)
         {
             if (rover == null) throw new ArgumentNullException("Rover not found !");
-            if (rover == null) throw new ArgumentNullException("Plateau not found !");
-            if (rover == null) throw new ArgumentNullException("Path not found !");
+            if (plateau == null) throw new ArgumentNullException("Plateau not found !");
+            if (route == null) throw new ArgumentNullException("Path not found !");
+
+            this.rover = rover;
+            this.plateau = plateau;
+            this.route = route;
         }
 
         public Rover Rover { private get => rover; set => rover = value; }
