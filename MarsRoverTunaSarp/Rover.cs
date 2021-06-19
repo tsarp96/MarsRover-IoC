@@ -4,17 +4,18 @@ using System.Text;
 
 namespace MarsRoverTunaSarp
 {
-    public class Rover : IDrivingOperator
+    public class Rover 
     {
 
         private readonly string id;
         private Position position;
 
         public string Id { get => id; }
-        internal Position Position { get => position; set => position = value; }
+        public Position Position { get => position; set => position = value; }
 
         public Rover(Position initialPosition)
         {
+            if (initialPosition == null) throw new ArgumentNullException("Initial Position");
             id = Guid.NewGuid().ToString();
             Position = initialPosition;
             Console.WriteLine("Rover with ID : " + id + " has been declared on plateau with coordinates : " + position.ToString());

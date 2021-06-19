@@ -21,8 +21,8 @@ namespace MarsRoverTunaSarp
                 Console.WriteLine("Please provide upper-right coordinates(x,y) of the plateau : (ex: <number> <number> like : '5 5' )");
 Step1:
                 var upperRightCoordinatesInput = Console.ReadLine();
-                var plateauCoordinates = panel.InputService.ProcessPlateauInput(upperRightCoordinatesInput);
-                if (plateauCoordinates == null)
+                var plateau = panel.InputService.ProcessPlateauInput(upperRightCoordinatesInput);
+                if (plateau == null)
                 {
                     Console.WriteLine("Invalid argument has been detected, please try again : (ex: <number> <number> like : '5 5' )");
                     goto Step1;
@@ -48,11 +48,10 @@ Step3:
                     goto Step3;
                 }
 
-                IDrivingOperator rover = new Rover(initialRoverPosition);
-                panel.ExplorationService = new ExplorationService(rover, explorationMap);
+                Rover rover = new Rover(initialRoverPosition);
+                panel.ExplorationService = new ExplorationService(rover, plateau, explorationMap);
                 panel.ExplorationService.TraceRoute();
                
-
                 goto Step2;
                 
             }

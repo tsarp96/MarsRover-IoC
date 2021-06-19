@@ -6,7 +6,7 @@ namespace MarsRoverTunaSarp.Services
 {
     public class InputService
     {
-        public int[] ProcessPlateauInput(string input)
+        public Plateau ProcessPlateauInput(string input)
         {
             var result = new int[2];
             var items = input.Trim().Split(' ');
@@ -22,7 +22,7 @@ namespace MarsRoverTunaSarp.Services
                 }
                 result[i] = value;
             }
-            return result;
+            return new Plateau(result[0], result[1]);
         }
 
         public Position ProcessRoverCoordinatesInput(string input)
@@ -46,9 +46,7 @@ namespace MarsRoverTunaSarp.Services
             {
                 return null;
             }
-            
-
-            return new Position() { X = result[0], Y = result[1], Direction = (int)Enum.Parse(typeof(Compass), items[2]) };
+            return new Position( result[0], result[1], (int)Enum.Parse(typeof(Compass), items[2]) );
         }
 
         public string ProcessRoversExplorationPathInput(string explorationMapInput)

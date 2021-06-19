@@ -6,16 +6,20 @@ namespace MarsRoverTunaSarp.Services
 {
     public class ExplorationService
     {
-        private IDrivingOperator rover;
+        private Rover rover;
         private string route;
-        public ExplorationService(IDrivingOperator rover, string path)
+        private Plateau plateau;
+
+        public ExplorationService(Rover rover, Plateau plateau, string path)
         {
             this.Rover = rover;
             this.Route = path;
+            this.Plateau = plateau;
         }
 
-        public IDrivingOperator Rover { private get => rover; set => rover = value; }
+        public Rover Rover { private get => rover; set => rover = value; }
         public string Route { private get => route; set => route = value; }
+        internal Plateau Plateau { get => plateau; set => plateau = value; }
 
         public void TraceRoute()
         {
@@ -34,7 +38,17 @@ namespace MarsRoverTunaSarp.Services
                 if (ch.Equals('M'))
                 {
                     rover.Move();
+                    checkBoundries(rover.Position, plateau);
                 }
+            }
+        }
+
+        private void checkBoundries(Position position, Plateau plateau)
+        {
+            if(position.X < plateau.HorizontalLoweLeftBoundry || position.X > plateau.HorizontalUpperRightBoundry
+                || position.Y < plateau.VerticalLowerLeftBoundry || position.Y > plateau.VerticalUpperRightBoundry)
+            {
+                throw new Exception("Boundry breach detected !");
             }
         }
     }
