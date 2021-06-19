@@ -1,10 +1,11 @@
-﻿using System;
+﻿using MarsRoverTunaSarp.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace MarsRoverTunaSarp.Services
 {
-    public class ExplorationService
+    public class ExplorationService : IExplorationService
     {
         private Rover rover;
         private string route;
