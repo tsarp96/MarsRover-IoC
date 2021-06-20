@@ -11,20 +11,20 @@ namespace MarsRoverTunaSarp.Services
         private string route;
         private Plateau plateau;
 
-        public ExplorationService(Rover rover, Plateau plateau, string route)
+        private ExplorationService() { }
+        private static ExplorationService instance = null;
+        public static ExplorationService Instance
         {
-            if (rover == null) throw new ArgumentNullException("Rover not found !");
-            if (plateau == null) throw new ArgumentNullException("Plateau not found !");
-            if (route == null) throw new ArgumentNullException("Path not found !");
-
-            this.rover = rover;
-            this.plateau = plateau;
-            this.route = route;
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new ExplorationService();
+                }
+                return instance;
+            }
         }
 
-        public Rover Rover { private get => rover; set => rover = value; }
-        public string Route { private get => route; set => route = value; }
-        internal Plateau Plateau { get => plateau; set => plateau = value; }
 
         public void TraceRoute()
         {
@@ -55,6 +55,36 @@ namespace MarsRoverTunaSarp.Services
             {
                 throw new Exception("Boundry breach detected !");
             }
+        }
+
+        public Rover getRover()
+        {
+            return this.rover;
+        }
+
+        public void setRover(Rover rover)
+        {
+            this.rover = rover;
+        }
+
+        public Plateau getPlateau()
+        {
+            return this.plateau;
+        }
+
+        public void setPlateau(Plateau plateau)
+        {
+            this.plateau = plateau;
+        }
+
+        public string getRoute()
+        {
+            return this.route;
+        }
+
+        public void setRoute(string route)
+        {
+            this.route = route;
         }
     }
 }

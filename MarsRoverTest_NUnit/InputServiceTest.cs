@@ -10,6 +10,8 @@ namespace MarsRoverTest_NUnit
 {
     public class InputServiceTest
     {
+        //Arrange
+        IInputService SUT = InputService.Instance;
 
         [Test]
         [TestCase("x g")]
@@ -22,8 +24,6 @@ namespace MarsRoverTest_NUnit
         [TestCase("0 0")] // plateau should not be a dot.
         public void ProcessPlateauInput_InputIsNotValid_ShouldReturnNull(string input)
         {
-            //Arrange
-            IInputService SUT = new InputService();
             //Act
             var result = SUT.ProcessPlateauInput(input);
             //Assert
@@ -34,8 +34,6 @@ namespace MarsRoverTest_NUnit
         [TestCase("5 5")]
         public void ProcessPlateauInput_InputIsOk_ShouldReturnPlateau(string input)
         {
-            //Arrange
-            IInputService SUT = new InputService();
             //Act
             var result = SUT.ProcessPlateauInput(input);
             //Assert
@@ -57,8 +55,6 @@ namespace MarsRoverTest_NUnit
         [TestCase("& % /")]
         public void ProcessRoverCoordinatesInput_InputIsNotValid_ShouldReturnNull(string input)
         {
-            //Arrange
-            IInputService SUT = new InputService();
             //Act
             var result = SUT.ProcessRoverCoordinatesInput(input);
             //Assert
@@ -70,8 +66,6 @@ namespace MarsRoverTest_NUnit
         [TestCase("1 2 n")]
         public void ProcessRoverCoordinatesInput_InputIsOk_ShouldReturnProperPosition(string input)
         {
-            //Arrange
-            IInputService SUT = new InputService();
             //Act
             var result = SUT.ProcessRoverCoordinatesInput(input);
             //Assert
@@ -89,8 +83,6 @@ namespace MarsRoverTest_NUnit
         [TestCase("")]
         public void IsRoversExplorationPathInputValid_InputIsNotValid_ShouldReturnNull(string input)
         {
-            //Arrange
-            IInputService SUT = new InputService();
             //Act
             var result = SUT.IsRoversExplorationPathInputValid(input);
             //Assert
@@ -104,8 +96,6 @@ namespace MarsRoverTest_NUnit
         [TestCase("m")]
         public void IsRoversExplorationPathInputValid_InputIsOk_ShouldReturnProperly(string input)
         {
-            //Arrange
-            IInputService SUT = new InputService();
             //Act
             var result = SUT.IsRoversExplorationPathInputValid(input);
             //Assert

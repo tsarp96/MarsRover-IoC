@@ -7,6 +7,19 @@ namespace MarsRoverTunaSarp.Services
 {
     public class InputService : IInputService
     {
+        private InputService() { }
+        private static InputService instance = null;
+        public static InputService Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new InputService();
+                }
+                return instance;
+            }
+        }
         public Plateau ProcessPlateauInput(string input)
         {
             var result = new int[2];

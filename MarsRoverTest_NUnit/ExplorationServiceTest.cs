@@ -1,4 +1,5 @@
 ﻿using MarsRoverTunaSarp;
+using MarsRoverTunaSarp.Interfaces;
 using MarsRoverTunaSarp.Services;
 using NUnit.Framework;
 using System;
@@ -8,14 +9,17 @@ namespace MarsRoverTest_NUnit
 {
     public class ExplorationServiceTest
     {
-        static List<List<Object>> explorationServiceParametersWithNulls = new List<List<Object>>()
-        {
-            new List<Object>() { new Rover(new Position(1, 2, (int)Compass.N)), new Plateau(5, 5), null },
-            new List<Object>() { null, new Plateau(5, 5), "LMRL" },
-            new List<Object>() { new Rover(new Position(1, 2, (int)Compass.N)), null, "LMR" },
-        };
+        IExplorationService sut = ExplorationService.Instance;
 
-      
+
+        [OneTimeTearDown]
+        public void RunAfterAnyTests()
+        {
+            sut.setRover(null);
+            sut.setPlateau(null);
+            sut.setRoute(null);
+        }
+
         [Test]
         public void TraceRoute_BoundryBreachDetected_ShouldThrowAnException()
         {
@@ -23,17 +27,13 @@ namespace MarsRoverTest_NUnit
             Plateau plateau = new Plateau(5, 5);
             Rover rover = new Rover(new Position(0, 0, (int)Compass.S));
             string route = "MLM";
-            ExplorationService sut = new ExplorationService(rover, plateau, route);
+            sut.setRover(rover);
+            sut.setPlateau(plateau);
+            sut.setRoute(route);
+            
             //Act & Assert
             Assert.Throws<Exception>(() => sut.TraceRoute());
 
-        }
-
-        [Test]
-        [TestCaseSource("explorationServiceParametersWithNulls")]
-        public void CreateExplorationService_SendNullParameters_ShouldThrowAnException(List<Object> parameters)
-        {
-            Assert.Throws<ArgumentNullException>(() => new ExplorationService((Rover)parameters[0], (Plateau)parameters[1], (string)parameters[2]));
         }
 
         [Test]
@@ -43,7 +43,9 @@ namespace MarsRoverTest_NUnit
             Plateau plateau = new Plateau(5, 5);
             Rover rover = new Rover(new Position(1, 2, (int)Compass.N));
             string route = "LMLMLMLMMR";
-            ExplorationService sut = new ExplorationService(rover, plateau, route);
+            sut.setRover(rover);
+            sut.setPlateau(plateau);
+            sut.setRoute(route);
             //Act
             sut.TraceRoute();
             //Assert

@@ -1,4 +1,5 @@
 ﻿using System;
+using MarsRoverTunaSarp.Interfaces;
 using MarsRoverTunaSarp.Services;
 
 namespace MarsRoverTunaSarp
@@ -7,7 +8,8 @@ namespace MarsRoverTunaSarp
     {
         static void Main(string[] args)
         {
-            RoverPanel panel = new RoverPanel(new InputService());
+
+            MarsRoverControlPanel panel = new MarsRoverControlPanel();
 
             panel.start();
         }
