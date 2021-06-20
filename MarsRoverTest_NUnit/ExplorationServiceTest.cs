@@ -9,7 +9,7 @@ namespace MarsRoverTest_NUnit
 {
     public class ExplorationServiceTest
     {
-        IExplorationService sut = ExplorationService.Instance;
+        IExplorationService sut = ExplorationService.getInstance;
 
 
         [OneTimeTearDown]

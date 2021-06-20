@@ -11,7 +11,7 @@ namespace MarsRoverTest_NUnit
     public class InputServiceTest
     {
         //Arrange
-        IInputService SUT = InputService.Instance;
+        IInputService SUT = InputService.getInstance;
 
         [Test]
         [TestCase("x g")]

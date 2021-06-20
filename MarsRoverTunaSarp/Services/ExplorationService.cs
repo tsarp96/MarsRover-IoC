@@ -13,7 +13,7 @@ namespace MarsRoverTunaSarp.Services
 
         private ExplorationService() { }
         private static ExplorationService instance = null;
-        public static ExplorationService Instance
+        public static ExplorationService getInstance
         {
             get
             {

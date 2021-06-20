@@ -9,7 +9,7 @@ namespace MarsRoverTunaSarp.Services
     {
         private InputService() { }
         private static InputService instance = null;
-        public static InputService Instance
+        public static InputService getInstance
         {
             get
             {
