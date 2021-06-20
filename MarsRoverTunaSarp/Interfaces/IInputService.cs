@@ -10,6 +10,6 @@ namespace MarsRoverTunaSarp.Interfaces
 
         Position ProcessRoverCoordinatesInput(string roverCoordintesInput);
 
-        string ProcessRoversExplorationPathInput(string explorationMapInput);
+        string IsRoversExplorationPathInputValid(string explorationMapInput);
     }
 }

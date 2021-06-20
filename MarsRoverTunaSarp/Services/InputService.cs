@@ -21,6 +21,10 @@ namespace MarsRoverTunaSarp.Services
                 {
                     return null;
                 }
+                if(value <= 0)
+                {
+                    return null;
+                }
                 result[i] = value;
             }
             return new Plateau(result[0], result[1]);
@@ -41,6 +45,10 @@ namespace MarsRoverTunaSarp.Services
                 {
                     return null;
                 }
+                if(value < 0)
+                {
+                    return null;
+                }
                 result[i] = value;
             }
             if (!validLetters.Contains(items[2]))
@@ -50,10 +58,14 @@ namespace MarsRoverTunaSarp.Services
             return new Position( result[0], result[1], (int)Enum.Parse(typeof(Compass), items[2]) );
         }
 
-        public string ProcessRoversExplorationPathInput(string explorationMapInput)
+        public string IsRoversExplorationPathInputValid(string explorationMapInput)
         {
-            var validLetters = new List<string>() { "L", "R", "M"};
-            foreach (var ch in explorationMapInput.ToCharArray())
+            if (explorationMapInput.Equals(string.Empty))
+            {
+                return null;
+            }
+            var validLetters = new List<string>() { "L", "R", "M" };
+            foreach (var ch in explorationMapInput.ToUpper().ToCharArray())
             {
                 if (!validLetters.Contains(ch.ToString()))
                 {
