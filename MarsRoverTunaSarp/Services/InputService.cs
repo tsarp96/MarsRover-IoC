@@ -34,7 +34,7 @@ namespace MarsRoverTunaSarp.Services
         {
             var result = new int[2];
             var validLetters = new List<string>() { "E", "W", "S", "N" };
-            var items = input.Trim().Split(' ');
+            var items = input.Trim().ToUpper().Split(' ');
             if (items.Length != 3)
             {
                 return null;
@@ -60,19 +60,20 @@ namespace MarsRoverTunaSarp.Services
 
         public string IsRoversExplorationPathInputValid(string explorationMapInput)
         {
-            if (explorationMapInput.Equals(string.Empty))
+            if (string.IsNullOrWhiteSpace(explorationMapInput) || string.IsNullOrEmpty(explorationMapInput))
             {
                 return null;
             }
+            var preparedInput = explorationMapInput.Trim().ToUpper();
             var validLetters = new List<string>() { "L", "R", "M" };
-            foreach (var ch in explorationMapInput.ToUpper().ToCharArray())
+            foreach (var ch in preparedInput.ToCharArray())
             {
                 if (!validLetters.Contains(ch.ToString()))
                 {
                     return null;
                 }
             }
-            return explorationMapInput;
+            return preparedInput;
         }
     }
 }
