@@ -60,6 +60,7 @@ Step2:
                 Rover rover = new Rover(initialRoverPosition);
                 IExplorationService explorationService = new ExplorationService(rover, plateau, explorationRoute);
                 explorationService.TraceRoute();
+                Console.WriteLine(rover.Position.ToString());
 
                 goto Step2;
 
