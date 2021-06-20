@@ -57,7 +57,11 @@ Step2:
                 ExplorationService.getInstance.setPlateau(plateau);
                 ExplorationService.getInstance.setRoute(explorationRoute);
 
-                ExplorationService.getInstance.TraceRoute();
+                var result = ExplorationService.getInstance.TraceRoute();
+                if (result == ExplorationResult.BoundryBreachDetected)
+                {
+                    Console.WriteLine("Boundry breach detected, rover stays in place.");
+                }
                 Console.WriteLine(rover.Position.ToString());
 
                 goto Step2;

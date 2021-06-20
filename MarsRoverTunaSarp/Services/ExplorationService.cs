@@ -5,6 +5,11 @@ using System.Text;
 
 namespace MarsRoverTunaSarp.Services
 {
+    public enum ExplorationResult
+    {
+        BoundryBreachDetected = 0,
+        Success = 1
+    }
     public class ExplorationService : IExplorationService
     {
         private Rover rover;
@@ -26,7 +31,7 @@ namespace MarsRoverTunaSarp.Services
         }
 
 
-        public void TraceRoute()
+        public ExplorationResult TraceRoute()
         {
             foreach (var ch in route.ToCharArray())
             {
@@ -42,19 +47,26 @@ namespace MarsRoverTunaSarp.Services
                 }
                 if (ch.Equals('M'))
                 {
+                    if (!IsGoingToBeInPlateauAfterMovement(rover.Position, plateau))
+                    {
+                        return ExplorationResult.BoundryBreachDetected;
+                    }
                     rover.Move();
-                    checkBoundries(rover.Position, plateau);
                 }
             }
+            return ExplorationResult.Success;
         }
 
-        private void checkBoundries(Position position, Plateau plateau)
+        private bool IsGoingToBeInPlateauAfterMovement(Position position, Plateau plateau)
         {
-            if(position.X < plateau.HorizontalLoweLeftBoundry || position.X > plateau.HorizontalUpperRightBoundry
-                || position.Y < plateau.VerticalLowerLeftBoundry || position.Y > plateau.VerticalUpperRightBoundry)
+            var temp = new Position(position.X, position.Y, position.Direction);
+            temp.Move();
+            if(temp.X < plateau.HorizontalLoweLeftBoundry || temp.X > plateau.HorizontalUpperRightBoundry
+                || temp.Y < plateau.VerticalLowerLeftBoundry || temp.Y > plateau.VerticalUpperRightBoundry)
             {
-                throw new Exception("Boundry breach detected !");
+                return false;
             }
+            return true;
         }
 
         public Rover getRover()

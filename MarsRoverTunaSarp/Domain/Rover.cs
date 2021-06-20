@@ -23,41 +23,17 @@ namespace MarsRoverTunaSarp
 
         public void TurnRight()
         {
-            var index = position.Direction;
-            index++;
-            index %= 4;
-
-            position.Direction = index;
+            position.Rotate90Degree();
         }
 
         public void TurnLeft()
         {
-            var index = position.Direction;
-            index--;
-            if (index < 0)
-            {
-                index = 3;
-            }
-            position.Direction = index;
+            position.RotateMinus90Degree();
         }
 
         public void Move()
         {
-            switch (position.Direction)
-            {
-                case (int)Compass.N:
-                    position.Y++;
-                    break;
-                case (int)Compass.E:
-                    position.X++;
-                    break;
-                case (int)Compass.W:
-                    position.X--;
-                    break;
-                case (int)Compass.S:
-                    position.Y--;
-                    break;
-            }
+            position.Move();
         }
 
     }

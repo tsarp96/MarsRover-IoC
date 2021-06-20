@@ -32,7 +32,7 @@ namespace MarsRoverTest_NUnit
             sut.setRoute(route);
             
             //Act & Assert
-            Assert.Throws<Exception>(() => sut.TraceRoute());
+            Assert.That(sut.TraceRoute(), Is.EqualTo(ExplorationResult.BoundryBreachDetected));
 
         }
 
