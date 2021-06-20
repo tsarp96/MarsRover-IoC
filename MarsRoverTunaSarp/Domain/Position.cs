@@ -23,7 +23,7 @@ namespace MarsRoverTunaSarp
 
         public override string ToString()
         {
-            return  "X: " + x + " Y:  " + y + " Direction: " + (Compass)Direction;
+            return  X + " " + Y + " " + (Compass)Direction;
         }
     }
 }
