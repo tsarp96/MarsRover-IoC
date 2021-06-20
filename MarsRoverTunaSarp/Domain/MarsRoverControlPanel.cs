@@ -9,10 +9,23 @@ namespace MarsRoverTunaSarp
     public class MarsRoverControlPanel
     {
 
-        public List<Rover> rovers;
-        public MarsRoverControlPanel(List<Rover> rovers)
+        private List<Rover> rovers;
+
+        private MarsRoverControlPanel()
         {
-            this.rovers = rovers;
+            this.rovers = new List<Rover>();
+        }
+        private static MarsRoverControlPanel instance = null;
+        public static MarsRoverControlPanel getInstance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new MarsRoverControlPanel();
+                }
+                return instance;
+            }
         }
 
         internal void start()
@@ -48,11 +61,11 @@ Step2:
                     goto Step2;
                 }
 Step3:
-                Console.WriteLine("Please provide exploration path for the {0}. rover : ",  rovers.Count + 1);
+                Console.WriteLine("Please provide exploration path for the {0}. rover : ", rovers.Count + 1);
                 Console.WriteLine("[ 'L': Rotate -90 Degree, 'R: Rotate +90 Degree', 'M': Move one unit ]");
                 Console.WriteLine("(ex: '<series of capital letters>' like : 'LLMMMRMMLMLLMRRMMM') :");
 
-                var explorationRouteInput = Console.ReadLine() ;
+                var explorationRouteInput = Console.ReadLine();
                 var explorationRoute = InputService.getInstance.IsRoversExplorationPathInputValid(explorationRouteInput);
                 if (explorationRoute == null)
                 {
