@@ -26,47 +26,51 @@ namespace MarsRoverTunaSarp.Services
             var items = input.Trim().Split(' ');
             if (items.Length != 2)
             {
-                return null;
+                throw new ArgumentException("This process requires 2 arguments");
             }
             for(int i=0; i<2; i++)
             {
                 if (!int.TryParse(items[i], out int value))
                 {
-                    return null;
+                    throw new ArgumentException("Non numeric argument is detected");
                 }
-                if(value <= 0)
+                if(value == 0)
                 {
-                    return null;
+                    throw new ArgumentException("Plateau can not be one dimensional");
+                }
+                if(value < 0)
+                {
+                    throw new ArgumentException("Negative argument is detected");
                 }
                 result[i] = value;
             }
             return new Plateau(result[0], result[1]);
         }
 
-        public Position ProcessRoverCoordinatesInput(string input)
+        public Position ProcessRoverPositionInput(string input)
         {
             var result = new int[2];
             var validLetters = new List<string>() { "E", "W", "S", "N" };
             var items = input.Trim().ToUpper().Split(' ');
             if (items.Length != 3)
             {
-                return null;
+                throw new ArgumentException("This process requires 3 arguments");
             }
             for (int i = 0; i < 2; i++)
             {
                 if (!int.TryParse(items[i], out int value))
                 {
-                    return null;
+                    throw new ArgumentException("Non numeric argument is detected");
                 }
                 if(value < 0)
                 {
-                    return null;
+                    throw new ArgumentException("Negative argument is detected");
                 }
                 result[i] = value;
             }
             if (!validLetters.Contains(items[2]))
             {
-                return null;
+                throw new ArgumentException("Invalid letter is detected for direction");
             }
             return new Position( result[0], result[1], (int)Enum.Parse(typeof(Compass), items[2]) );
         }
@@ -75,7 +79,7 @@ namespace MarsRoverTunaSarp.Services
         {
             if (string.IsNullOrWhiteSpace(explorationMapInput) || string.IsNullOrEmpty(explorationMapInput))
             {
-                return null;
+                throw new ArgumentException();
             }
             var preparedInput = explorationMapInput.Trim().ToUpper();
             var validLetters = new List<string>() { "L", "R", "M" };
@@ -83,7 +87,7 @@ namespace MarsRoverTunaSarp.Services
             {
                 if (!validLetters.Contains(ch.ToString()))
                 {
-                    return null;
+                    throw new ArgumentException("Invalid letter is detected for cardinal compass");
                 }
             }
             return preparedInput;

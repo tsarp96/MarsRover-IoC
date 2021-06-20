@@ -8,7 +8,7 @@ namespace MarsRoverTunaSarp.Interfaces
     {
         Plateau ProcessPlateauInput(string PlateauInput);
 
-        Position ProcessRoverCoordinatesInput(string roverCoordintesInput);
+        Position ProcessRoverPositionInput(string roverCoordintesInput);
 
         string IsRoversExplorationPathInputValid(string explorationMapInput);
     }
