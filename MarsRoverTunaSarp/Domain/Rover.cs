@@ -28,8 +28,6 @@ namespace MarsRoverTunaSarp
             index %= 4;
 
             position.Direction = index;
-
-            Console.WriteLine(position.ToString());
         }
 
         public void TurnLeft()
@@ -41,8 +39,6 @@ namespace MarsRoverTunaSarp
                 index = 3;
             }
             position.Direction = index;
-
-            Console.WriteLine(position.ToString());
         }
 
         public void Move()
@@ -62,7 +58,6 @@ namespace MarsRoverTunaSarp
                     position.Y--;
                     break;
             }
-            Console.WriteLine(position.ToString());
         }
 
     }
