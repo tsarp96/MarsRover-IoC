@@ -9,8 +9,10 @@ namespace MarsRoverTunaSarp
     public class MarsRoverControlPanel
     {
 
-        public MarsRoverControlPanel()
+        public List<Rover> rovers;
+        public MarsRoverControlPanel(List<Rover> rovers)
         {
+            this.rovers = rovers;
         }
 
         internal void start()
@@ -29,30 +31,38 @@ Step1:
                 if (plateau == null)
                 {
                     Console.WriteLine("Invalid argument has been detected, please try again : (ex: <positive number> <positive number> like : '5 5' )");
+                    Console.WriteLine("-------------------------------------------------------");
                     goto Step1;
                 }
-
-                Console.WriteLine("Please provide initial coordinates(x,y) for the rover [ 'E': East, 'W': West, 'S': South, 'N': North ]: (ex: <number> <number> <direction> like : '1 2 N') :");
 Step2:
+                Console.WriteLine("Please provide initial position for the {0}. rover.", rovers.Count + 1);
+                Console.WriteLine("['E': East, 'W': West, 'S': South, 'N': North]");
+                Console.WriteLine("(ex: <number> <number> <direction> like : '1 2 N') :");
+
                 var initialRoverPositionInput = Console.ReadLine();
                 var initialRoverPosition = InputService.getInstance.ProcessRoverCoordinatesInput(initialRoverPositionInput);
                 if (initialRoverPosition == null)
                 {
                     Console.WriteLine("Invalid argument has been detected, please try again : (ex: <number> <nubmer> <direction> like : '1 2 N')");
+                    Console.WriteLine("-------------------------------------------------------");
                     goto Step2;
                 }
+Step3:
+                Console.WriteLine("Please provide exploration path for the {0}. rover : ",  rovers.Count + 1);
+                Console.WriteLine("[ 'L': Rotate -90 Degree, 'R: Rotate +90 Degree', 'M': Move one unit ]");
+                Console.WriteLine("(ex: '<series of capital letters>' like : 'LLMMMRMMLMLLMRRMMM') :");
 
-                Console.WriteLine("Please provide exploration path for the rover [ 'L': Rotate -90 Degree, 'R: Rotate +90 Degree', 'M': Move one unit ]: (ex: '<series of capital letters>' like : 'LLMMMRMMLMLLMRRMMM') :");
-                Step3:
                 var explorationRouteInput = Console.ReadLine() ;
                 var explorationRoute = InputService.getInstance.IsRoversExplorationPathInputValid(explorationRouteInput);
                 if (explorationRoute == null)
                 {
                     Console.WriteLine("Invalid argument has been detected, please try again : (ex: '<series of capital letters>' like : 'LLMMMRMMLMLLMRRMMM') ");
+                    Console.WriteLine("-------------------------------------------------------");
                     goto Step3;
                 }
 
                 Rover rover = new Rover(initialRoverPosition);
+                rovers.Add(rover);
                 ExplorationService.getInstance.setRover(rover);
                 ExplorationService.getInstance.setPlateau(plateau);
                 ExplorationService.getInstance.setRoute(explorationRoute);
@@ -62,7 +72,8 @@ Step2:
                 {
                     Console.WriteLine("Boundry breach detected, rover stays in place.");
                 }
-                Console.WriteLine(rover.Position.ToString());
+                Console.WriteLine("Final position : " + rover.Position.ToString());
+                Console.WriteLine("---------------------------------------");
 
                 goto Step2;
 

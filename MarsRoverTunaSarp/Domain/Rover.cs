@@ -18,7 +18,7 @@ namespace MarsRoverTunaSarp
             if (initialPosition == null) throw new ArgumentNullException("Initial Position");
             id = Guid.NewGuid().ToString();
             Position = initialPosition;
-            Console.WriteLine("Rover with ID : " + id + " has been declared on plateau with coordinates : " + position.ToString());
+            Console.WriteLine("Rover with ID : " + id + " has been declared on plateau, initial position : " + position.ToString());
         }
 
         public void TurnRight()

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using MarsRoverTunaSarp.Interfaces;
 using MarsRoverTunaSarp.Services;
 
@@ -8,9 +9,8 @@ namespace MarsRoverTunaSarp
     {
         static void Main(string[] args)
         {
-
-            MarsRoverControlPanel panel = new MarsRoverControlPanel();
-
+            List<Rover> rovers = new List<Rover>();
+            MarsRoverControlPanel panel = new MarsRoverControlPanel(rovers);
             panel.start();
         }
     }
