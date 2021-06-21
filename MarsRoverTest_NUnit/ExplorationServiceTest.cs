@@ -16,10 +16,9 @@ namespace MarsRoverTest_NUnit
         [OneTimeTearDown]
         public void RunAfterAnyTests()
         {
-            SUT.Rover = null;
-            SUT.Plateau = null;
-            SUT.Route = null;
+            ResetSUT();
         }
+
 
         [Test]
         public void TraceRoute_BoundryBreachDetected_ShouldThrowAnException()
@@ -54,6 +53,12 @@ namespace MarsRoverTest_NUnit
             Assert.That(Rover.Position.Y, Is.EqualTo(3));
             Assert.That(Rover.Position.Direction, Is.EqualTo((int)Compass.E));
 
+        }
+        private void ResetSUT()
+        {
+            SUT.Rover = null;
+            SUT.Plateau = null;
+            SUT.Route = null;
         }
 
     }
