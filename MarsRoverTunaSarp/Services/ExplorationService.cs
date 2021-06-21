@@ -1,24 +1,20 @@
-﻿using MarsRoverTunaSarp.Interfaces;
+﻿using MarsRoverTunaSarp.Enum;
+using MarsRoverTunaSarp.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace MarsRoverTunaSarp.Services
 {
-    public enum ExplorationResult
-    {
-        BoundryBreachDetected = 0,
-        Success = 1
-    }
     public class ExplorationService : IExplorationService
     {
-        private Rover rover;
-        private string route;
-        private Plateau plateau;
+        public Rover Rover { get; set; }
+        public string Route { get; set; }
+        public Plateau Plateau { get; set; }
 
         private ExplorationService() { }
         private static ExplorationService instance = null;
-        public static ExplorationService getInstance
+        public static ExplorationService Instance
         {
             get
             {
@@ -33,25 +29,25 @@ namespace MarsRoverTunaSarp.Services
 
         public ExplorationResult TraceRoute()
         {
-            foreach (var ch in route.ToCharArray())
+            foreach (var ch in Route.ToCharArray())
             {
                 if (ch.Equals('L'))
                 {
-                    rover.TurnLeft();
+                    Rover.TurnLeft();
                     continue;
                 }
                 if (ch.Equals('R'))
                 {
-                    rover.TurnRight();
+                    Rover.TurnRight();
                     continue;
                 }
                 if (ch.Equals('M'))
                 {
-                    if (!IsGoingToBeInPlateauAfterMovement(rover.Position, plateau))
+                    if (IsGoingToBeInPlateauAfterMovement(Rover.Position, Plateau))
                     {
                         return ExplorationResult.BoundryBreachDetected;
                     }
-                    rover.Move();
+                    Rover.Move();
                 }
             }
             return ExplorationResult.Success;
@@ -61,42 +57,13 @@ namespace MarsRoverTunaSarp.Services
         {
             var temp = new Position(position.X, position.Y, position.Direction);
             temp.Move();
-            if(temp.X < plateau.HorizontalLoweLeftBoundry || temp.X > plateau.HorizontalUpperRightBoundry
-                || temp.Y < plateau.VerticalLowerLeftBoundry || temp.Y > plateau.VerticalUpperRightBoundry)
-            {
-                return false;
-            }
-            return true;
+            return IsThereAnyCrossoverBetween(temp, plateau);
         }
 
-        public Rover getRover()
+        private bool IsThereAnyCrossoverBetween(Position RoverPosition, Plateau plateau)
         {
-            return this.rover;
-        }
-
-        public void setRover(Rover rover)
-        {
-            this.rover = rover;
-        }
-
-        public Plateau getPlateau()
-        {
-            return this.plateau;
-        }
-
-        public void setPlateau(Plateau plateau)
-        {
-            this.plateau = plateau;
-        }
-
-        public string getRoute()
-        {
-            return this.route;
-        }
-
-        public void setRoute(string route)
-        {
-            this.route = route;
+            return RoverPosition.X < plateau.HorizontalLowerLeftBoundry || RoverPosition.X > plateau.HorizontalUpperRightBoundry
+                 || RoverPosition.Y < plateau.VerticalLowerLeftBoundry || RoverPosition.Y > plateau.VerticalUpperRightBoundry;
         }
     }
 }

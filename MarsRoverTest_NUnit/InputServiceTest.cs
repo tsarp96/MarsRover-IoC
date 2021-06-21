@@ -11,7 +11,7 @@ namespace MarsRoverTest_NUnit
     public class InputServiceTest
     {
         //Arrange
-        IInputService SUT = InputService.getInstance;
+        IInputService SUT = InputService.Instance;
 
         [Test]
         [TestCase("x g")]
@@ -37,7 +37,7 @@ namespace MarsRoverTest_NUnit
             Assert.That(result.GetType(), Is.EqualTo(typeof(Plateau)));
             Assert.That(result.HorizontalUpperRightBoundry, Is.EqualTo(5));
             Assert.That(result.VerticalUpperRightBoundry, Is.EqualTo(5));
-            Assert.That(result.HorizontalLoweLeftBoundry, Is.EqualTo(0));
+            Assert.That(result.HorizontalLowerLeftBoundry, Is.EqualTo(0));
             Assert.That(result.VerticalLowerLeftBoundry, Is.EqualTo(0));
 
         }

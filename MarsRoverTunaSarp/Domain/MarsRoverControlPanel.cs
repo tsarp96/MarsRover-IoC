@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using MarsRoverTunaSarp.Enum;
 using MarsRoverTunaSarp.Interfaces;
 using MarsRoverTunaSarp.Services;
 
@@ -8,15 +9,14 @@ namespace MarsRoverTunaSarp
 {
     public class MarsRoverControlPanel
     {
-
-        private List<Rover> rovers;
+        private List<Rover> Rovers;
 
         private MarsRoverControlPanel()
         {
-            this.rovers = new List<Rover>();
+            this.Rovers = new List<Rover>();
         }
         private static MarsRoverControlPanel instance = null;
-        public static MarsRoverControlPanel getInstance
+        public static MarsRoverControlPanel Instance
         {
             get
             {
@@ -32,18 +32,18 @@ namespace MarsRoverTunaSarp
         {
             Console.WriteLine("Welcome to Mars Rover Panel");
 
-            bool isDone = false;
+            bool IsDone = false;
 
-            while (!isDone)
+            while (!IsDone)
             {
 Step1:
                 Console.WriteLine("Please provide upper-right coordinates(x,y) of the plateau : (ex: <positive number> <positive number> like : '5 5' )");
 
-                var upperRightCoordinatesInput = Console.ReadLine();
-                Plateau plateau = null;
+                var UpperRightCoordinatesInput = Console.ReadLine();
+                Plateau Plateau = null;
                 try
                 {
-                    plateau = InputService.getInstance.ProcessPlateauInput(upperRightCoordinatesInput);
+                    Plateau = InputService.Instance.ProcessPlateauInput(UpperRightCoordinatesInput);
                     Console.WriteLine("--------------------------->");
                 }
                 catch (Exception e)
@@ -54,15 +54,15 @@ Step1:
                 }
                 
 Step2:
-                Console.WriteLine("Please provide initial position for the {0}. rover ", rovers.Count + 1);
+                Console.WriteLine("Please provide initial position for the {0}. rover ", Rovers.Count + 1);
                 Console.WriteLine("['E': East, 'W': West, 'S': South, 'N': North]");
                 Console.WriteLine("(ex: <number> <number> <direction> like : '1 2 N') :");
 
                 var initialRoverPositionInput = Console.ReadLine();
-                Position position = null;
+                Position Position = null;
                 try
                 {
-                    position = InputService.getInstance.ProcessRoverPositionInput(initialRoverPositionInput);
+                    Position = InputService.Instance.ProcessRoverPositionInput(initialRoverPositionInput);
                     Console.WriteLine("--------------------------->");
                 }
                 catch (Exception e)
@@ -72,15 +72,15 @@ Step2:
                     goto Step2;
                 }
 Step3:
-                Console.WriteLine("Please provide exploration path for the {0}. rover : ", rovers.Count + 1);
+                Console.WriteLine("Please provide exploration path for the {0}. rover : ", Rovers.Count + 1);
                 Console.WriteLine("[ 'L': Rotate -90 Degree, 'R: Rotate +90 Degree', 'M': Move one unit ]");
                 Console.WriteLine("(ex: '<series of capital letters>' like : 'LLMMMRMMLMLLMRRMMM') :");
 
-                string route = null;
+                string Route = null;
                 var explorationRouteInput = Console.ReadLine();
                 try
                 {
-                    route = InputService.getInstance.IsRoversExplorationPathInputValid(explorationRouteInput);
+                    Route = InputService.Instance.IsRoversExplorationPathInputValid(explorationRouteInput);
                     Console.WriteLine("--------------------------->");
                 }
                 catch (Exception e)
@@ -90,18 +90,18 @@ Step3:
                     goto Step3;
                 }
 
-                Rover rover = new Rover(position);
-                rovers.Add(rover);
-                ExplorationService.getInstance.setRover(rover);
-                ExplorationService.getInstance.setPlateau(plateau);
-                ExplorationService.getInstance.setRoute(route);
+                Rover Rover = new Rover(Position);
+                Rovers.Add(Rover);
+                ExplorationService.Instance.Rover = Rover;
+                ExplorationService.Instance.Plateau = Plateau;
+                ExplorationService.Instance.Route = Route;
 
-                var result = ExplorationService.getInstance.TraceRoute();
+                var result = ExplorationService.Instance.TraceRoute();
                 if (result == ExplorationResult.BoundryBreachDetected)
                 {
                     Console.WriteLine("Boundry breach detected, rover stays in place.");
                 }
-                Console.WriteLine("\n \t \t \t \t >> Final position for the {0}. rover : " + rover.Position.ToString() + " <<" , rovers.Count);
+                Console.WriteLine("\n \t \t \t \t >> Final position for the {0}. rover : " + Rover.Position.ToString() + " <<" , Rovers.Count);
                 Console.WriteLine("---------------------------------------");
 
                 goto Step2;

@@ -4,8 +4,7 @@
     {
         static void Main(string[] args)
         {
-            MarsRoverControlPanel.getInstance.start();
+            MarsRoverControlPanel.Instance.start();
         }
-
     }
 }

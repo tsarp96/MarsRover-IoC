@@ -1,7 +1,6 @@
 ﻿using MarsRoverTunaSarp.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace MarsRoverTunaSarp.Services
 {
@@ -9,7 +8,7 @@ namespace MarsRoverTunaSarp.Services
     {
         private InputService() { }
         private static InputService instance = null;
-        public static InputService getInstance
+        public static InputService Instance
         {
             get
             {
@@ -72,7 +71,7 @@ namespace MarsRoverTunaSarp.Services
             {
                 throw new ArgumentException("Invalid letter is detected for direction");
             }
-            return new Position( result[0], result[1], (int)Enum.Parse(typeof(Compass), items[2]) );
+            return new Position( result[0], result[1], (int)System.Enum.Parse(typeof(Compass), items[2]) );
         }
 
         public string IsRoversExplorationPathInputValid(string explorationMapInput)
