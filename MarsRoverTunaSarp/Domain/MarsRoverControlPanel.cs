@@ -11,10 +11,7 @@ namespace MarsRoverTunaSarp
     public class MarsRoverControlPanel
     {
         public List<Rover> Rovers { get; set; }
-        private Plateau Plateau;
-        private Position Position;
-        private string Route;
-        public int RoversCount { get; set; }
+        public int SquadLimit { get; set; }
         public IRetriever ConsoleRetriever { get; set; }
         private MarsRoverControlPanel()
         {
@@ -39,7 +36,7 @@ namespace MarsRoverTunaSarp
 
             try
             {
-                Plateau = RetrieveAndPreparePlateauFromConsole();
+                ExplorationService.Instance.Plateau = RetrieveAndPreparePlateauFromConsole();
             }
             catch (Exception e)
             {
@@ -49,12 +46,14 @@ namespace MarsRoverTunaSarp
                 return;
             }
 
-            for (int i = 0; i<RoversCount; i++)
+            for (int i = 0; i<SquadLimit; i++)
             {
                
                 try
                 {
-                    Position = RetrieveAndPreparePositionFromConsole();
+                    Rover Rover = new Rover(RetrieveAndPreparePositionFromConsole());
+                    Rovers.Add(Rover);
+                    ExplorationService.Instance.Rover = Rover;
                 }
                 catch (Exception e)
                 {
@@ -66,7 +65,8 @@ namespace MarsRoverTunaSarp
 
                 try
                 {
-                    Route = RetrieveAndPrepareRouteFromConsole();
+
+                    ExplorationService.Instance.Route = RetrieveAndPrepareRouteFromConsole();
                 }
                 catch (Exception e)
                 {
@@ -75,19 +75,13 @@ namespace MarsRoverTunaSarp
                     Console.WriteLine("Please restart the program");
                     return;
                 }
-
-                Rover Rover = new Rover(Position);
-                Rovers.Add(Rover);
-                ExplorationService.Instance.Rover = Rover;
-                ExplorationService.Instance.Plateau = Plateau;
-                ExplorationService.Instance.Route = Route;
 
                 var result = ExplorationService.Instance.TraceRoute();
                 if (result == ExplorationResult.BoundryBreachDetected)
                 {
                     Console.WriteLine("Boundry breach detected, rover stays in place.");
                 }
-                Console.WriteLine("\n \t \t \t \t >> Final position for the {0}. rover : " + Rover.Position.ToString() + " <<" , Rovers.Count);
+                Console.WriteLine("\n \t \t \t \t >> Final position for the {0}. rover : " + Rovers[i].Position.ToString() + " <<" , Rovers.Count);
                 Console.WriteLine("---------------------------------------");
 
                 if (Rovers.Count == 2) 

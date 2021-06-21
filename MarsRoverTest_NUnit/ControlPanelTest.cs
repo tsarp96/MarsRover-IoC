@@ -18,7 +18,7 @@ namespace MarsRoverTest_NUnit
         {
             //Arrange
             var SUT = MarsRoverControlPanel.Instance;
-            SUT.RoversCount = 1; 
+            SUT.SquadLimit = 1; 
             var consoleMock = new Mock<IRetriever>();
             consoleMock.Setup(c => c.GetPlateauInput()).Returns("5 5");
             consoleMock.Setup(c => c.GetRoverPositionInput()).Returns("1 2 N");
