@@ -6,45 +6,41 @@ namespace MarsRoverTunaSarp
 {
     public class Position
     {
-        private int x;
-        private int y;
-        private int direction;
-
-        public int X { get => x; set => x = value; }
-        public int Y { get => y; set => y = value; }
-        public int Direction { get => direction; set => direction = value; }
+        public int X { get; set; }
+        public int Y { get; set; }
+        public int Direction { get; set; }
 
         public Position(int x, int y, int direction)
         {
-            this.x = x;
-            this.y = y;
-            this.direction = direction;
+            this.X = x;
+            this.Y = y;
+            this.Direction = direction;
         }
 
 
         public void Rotate90Degree()
         {
-            var index = direction;
+            var index = Direction;
             index++;
             index %= 4;
 
-            direction = index;
+            Direction = index;
         }
 
         public void RotateMinus90Degree()
         {
-            var index = direction;
+            var index = Direction;
             index--;
             if (index < 0)
             {
                 index = 3;
             }
-            direction = index;
+            Direction = index;
         }
 
         public void Move()
         {
-            switch (direction)
+            switch (Direction)
             {
                 case (int)Compass.N:
                     Y++;
