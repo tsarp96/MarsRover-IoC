@@ -1,22 +1,25 @@
 ﻿using MarsRoverTunaSarp.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using MarsRoverTunaSarp.Domain;
+using MarsRoverTunaSarp.Enum;
 
 namespace MarsRoverTunaSarp.Services
 {
     public class InputService : IInputService
     {
         private InputService() { }
-        private static InputService instance = null;
+        private static InputService _instance = null;
         public static InputService Instance
         {
             get
             {
-                if (instance == null)
+                if (_instance == null)
                 {
-                    instance = new InputService();
+                    _instance = new InputService();
                 }
-                return instance;
+                return _instance;
             }
         }
         public Plateau ProcessPlateauInput(string input)
@@ -82,12 +85,9 @@ namespace MarsRoverTunaSarp.Services
             }
             var preparedInput = explorationMapInput.Trim().ToUpper();
             var validLetters = new List<string>() { "L", "R", "M" };
-            foreach (var ch in preparedInput.ToCharArray())
+            if (preparedInput.ToCharArray().Any(ch => !validLetters.Contains(ch.ToString())))
             {
-                if (!validLetters.Contains(ch.ToString()))
-                {
-                    throw new ArgumentException("Invalid letter is detected for cardinal compass");
-                }
+                throw new ArgumentException("Invalid letter is detected for cardinal compass");
             }
             return preparedInput;
         }

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using MarsRoverTunaSarp.Domain;
 
 namespace MarsRoverTunaSarp.Interfaces
 {

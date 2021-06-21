@@ -1,36 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using MarsRoverTunaSarp.Enum;
 using MarsRoverTunaSarp.Interfaces;
 using MarsRoverTunaSarp.Services;
-using MarsRoverTunaSarp.ConsoleRetrievers;
 
-namespace MarsRoverTunaSarp
+namespace MarsRoverTunaSarp.Domain
 {
     public class MarsRoverControlPanel
     {
-        public List<Rover> Rovers { get; set; }
+        public List<Rover> Rovers { get; }
         public int SquadLimit { get; set; }
         public IRetriever ConsoleRetriever { get; set; }
         private MarsRoverControlPanel()
         {
             this.Rovers = new List<Rover>();
         }
-        private static MarsRoverControlPanel instance = null;
+        private static MarsRoverControlPanel _instance = null;
         public static MarsRoverControlPanel Instance
         {
             get
             {
-                if (instance == null)
+                if (_instance == null)
                 {
-                    instance = new MarsRoverControlPanel();
+                    _instance = new MarsRoverControlPanel();
                 }
-                return instance;
+                return _instance;
             }
         }
 
-        public void start()
+        public void Start()
         {
             Console.WriteLine("Welcome to Mars Rover Panel");
 
@@ -51,9 +49,9 @@ namespace MarsRoverTunaSarp
                
                 try
                 {
-                    Rover Rover = new Rover(RetrieveAndPreparePositionFromConsole());
-                    Rovers.Add(Rover);
-                    ExplorationService.Instance.Rover = Rover;
+                    var rover = new Rover(RetrieveAndPreparePositionFromConsole());
+                    Rovers.Add(rover);
+                    ExplorationService.Instance.Rover = rover;
                 }
                 catch (Exception e)
                 {
@@ -77,11 +75,11 @@ namespace MarsRoverTunaSarp
                 }
 
                 var result = ExplorationService.Instance.TraceRoute();
-                if (result == ExplorationResult.BoundryBreachDetected)
+                if (result == ExplorationResult.BoundaryBreachDetected)
                 {
-                    Console.WriteLine("Boundry breach detected, rover stays in place.");
+                    Console.WriteLine("Boundary breach detected, rover stays in place.");
                 }
-                Console.WriteLine("\n \t \t \t \t >> Final position for the {0}. rover : " + Rovers[i].Position.ToString() + " <<" , Rovers.Count);
+                Console.WriteLine("\n \t \t \t \t >> Final position for the {0}. rover : " + Rovers[i].Position + " <<" , Rovers.Count);
                 Console.WriteLine("---------------------------------------");
 
                 if (Rovers.Count == 2) 
@@ -91,38 +89,36 @@ namespace MarsRoverTunaSarp
             }
         }
 
-        public string RetrieveAndPrepareRouteFromConsole()
+        private string RetrieveAndPrepareRouteFromConsole()
         {
-            string Route;
             Console.WriteLine("Please provide exploration path for the {0}. rover : ", Rovers.Count + 1);
             Console.WriteLine("[ 'L': Rotate -90 Degree, 'R: Rotate +90 Degree', 'M': Move one unit ]");
             Console.WriteLine("(ex: '<series of capital letters>' like : 'LLMMMRMMLMLLMRRMMM') :");
             var explorationRouteInput = ConsoleRetriever.GetRouteInput();
-            Route = InputService.Instance.IsRoversExplorationPathInputValid(explorationRouteInput);
+            var route = InputService.Instance.IsRoversExplorationPathInputValid(explorationRouteInput);
             Console.WriteLine("--------------------------->");
-            return Route;
+            return route;
         }
 
-        public Position RetrieveAndPreparePositionFromConsole()
+        private Position RetrieveAndPreparePositionFromConsole()
         {
-            Position Position;
             Console.WriteLine("Please provide initial position for the {0}. rover ", Rovers.Count + 1);
             Console.WriteLine("['E': East, 'W': West, 'S': South, 'N': North]");
             Console.WriteLine("(ex: <number> <number> <direction> like : '1 2 N') :");
 
             var initialRoverPositionInput = ConsoleRetriever.GetRoverPositionInput();
-            Position = InputService.Instance.ProcessRoverPositionInput(initialRoverPositionInput);
+            var position = InputService.Instance.ProcessRoverPositionInput(initialRoverPositionInput);
             Console.WriteLine("--------------------------->");
-            return Position;
+            return position;
         }
 
-        public Plateau RetrieveAndPreparePlateauFromConsole()
+        private Plateau RetrieveAndPreparePlateauFromConsole()
         {
             Console.WriteLine("Please provide upper-right coordinates(x,y) of the plateau : (ex: <positive number> <positive number> like : '5 5' )");
-            var UpperRightCoordinatesInput = ConsoleRetriever.GetPlateauInput();
-            Plateau Plateau = InputService.Instance.ProcessPlateauInput(UpperRightCoordinatesInput);
+            var upperRightCoordinatesInput = ConsoleRetriever.GetPlateauInput();
+            var plateau = InputService.Instance.ProcessPlateauInput(upperRightCoordinatesInput);
             Console.WriteLine("--------------------------->");
-            return Plateau;
+            return plateau;
         }
     }
 }

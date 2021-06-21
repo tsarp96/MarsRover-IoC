@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MarsRoverTunaSarp.Enum
+﻿namespace MarsRoverTunaSarp.Enum
 {
     public enum ExplorationResult
     {
-        BoundryBreachDetected = 0,
+        BoundaryBreachDetected = 0,
         Success = 1
     }
 }

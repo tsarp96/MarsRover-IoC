@@ -1,38 +1,34 @@
 ﻿using MarsRoverTunaSarp;
 using MarsRoverTunaSarp.Enum;
-using MarsRoverTunaSarp.Interfaces;
 using MarsRoverTunaSarp.Services;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
+using MarsRoverTunaSarp.Domain;
 
 namespace MarsRoverTest_NUnit
 {
     public class ExplorationServiceTest
     {
-        ExplorationService SUT = ExplorationService.Instance;
-
-
+        private readonly ExplorationService  _sut = ExplorationService.Instance;
+        
         [OneTimeTearDown]
         public void RunAfterAnyTests()
         {
-            ResetSUT();
+            ResetSut();
         }
-
-
+        
         [Test]
-        public void TraceRoute_BoundryBreachDetected_ShouldThrowAnException()
+        public void TraceRoute_BoundaryBreachDetected_ShouldThrowAnException()
         {
             //Arrange
-            Plateau Plateau = new Plateau(5, 5);
-            Rover Rover = new Rover(new Position(0, 0, (int)Compass.S));
-            string Route = "MLM";
-            SUT.Rover = Rover;
-            SUT.Plateau = Plateau;
-            SUT.Route = Route;
+            var plateau = new Plateau(5, 5);
+            var rover = new Rover(new Position(0, 0, (int)Compass.S));
+            const string route = "MLM";
+            _sut.Rover = rover;
+            _sut.Plateau = plateau;
+            _sut.Route = route;
             
             //Act & Assert
-            Assert.That(SUT.TraceRoute(), Is.EqualTo(ExplorationResult.BoundryBreachDetected));
+            Assert.That(_sut.TraceRoute(), Is.EqualTo(ExplorationResult.BoundaryBreachDetected));
 
         }
 
@@ -40,25 +36,25 @@ namespace MarsRoverTest_NUnit
         public void TraceRoute_ParameterIsNormal_RoverShouldBeReallocatedCorrectly()
         {
             //Arrange
-            Plateau Plateau = new Plateau(5, 5);
-            Rover Rover = new Rover(new Position(1, 2, (int)Compass.N));
-            string Route = "LMLMLMLMMR";
-            SUT.Rover = Rover;
-            SUT.Plateau = Plateau;
-            SUT.Route = Route;
+            var plateau = new Plateau(5, 5);
+            var rover = new Rover(new Position(1, 2, (int)Compass.N));
+            const  string route = "LMLMLMLMMR";
+            _sut.Rover = rover;
+            _sut.Plateau = plateau;
+            _sut.Route = route;
             //Act
-            SUT.TraceRoute();
+            _sut.TraceRoute();
             //Assert
-            Assert.That(Rover.Position.X, Is.EqualTo(1));
-            Assert.That(Rover.Position.Y, Is.EqualTo(3));
-            Assert.That(Rover.Position.Direction, Is.EqualTo((int)Compass.E));
+            Assert.That(rover.Position.X, Is.EqualTo(1));
+            Assert.That(rover.Position.Y, Is.EqualTo(3));
+            Assert.That(rover.Position.Direction, Is.EqualTo((int)Compass.E));
 
         }
-        private void ResetSUT()
+        private void ResetSut()
         {
-            SUT.Rover = null;
-            SUT.Plateau = null;
-            SUT.Route = null;
+            _sut.Rover = null;
+            _sut.Plateau = null;
+            _sut.Route = null;
         }
 
     }

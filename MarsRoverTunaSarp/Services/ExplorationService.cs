@@ -1,8 +1,6 @@
 ﻿using MarsRoverTunaSarp.Enum;
 using MarsRoverTunaSarp.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using MarsRoverTunaSarp.Domain;
 
 namespace MarsRoverTunaSarp.Services
 {
@@ -13,16 +11,16 @@ namespace MarsRoverTunaSarp.Services
         public Plateau Plateau { get; set; }
 
         private ExplorationService() { }
-        private static ExplorationService instance = null;
+        private static ExplorationService _instance = null;
         public static ExplorationService Instance
         {
             get
             {
-                if (instance == null)
+                if (_instance == null)
                 {
-                    instance = new ExplorationService();
+                    _instance = new ExplorationService();
                 }
-                return instance;
+                return _instance;
             }
         }
 
@@ -45,7 +43,7 @@ namespace MarsRoverTunaSarp.Services
                 {
                     if (IsGoingToBeInPlateauAfterMovement(Rover.Position, Plateau))
                     {
-                        return ExplorationResult.BoundryBreachDetected;
+                        return ExplorationResult.BoundaryBreachDetected;
                     }
                     Rover.Move();
                 }
@@ -60,10 +58,12 @@ namespace MarsRoverTunaSarp.Services
             return IsThereAnyCrossoverBetween(temp, plateau);
         }
 
-        private bool IsThereAnyCrossoverBetween(Position RoverPosition, Plateau plateau)
+        private bool IsThereAnyCrossoverBetween(Position roverPosition, Plateau plateau)
         {
-            return RoverPosition.X < plateau.HorizontalLowerLeftBoundry || RoverPosition.X > plateau.HorizontalUpperRightBoundry
-                 || RoverPosition.Y < plateau.VerticalLowerLeftBoundry || RoverPosition.Y > plateau.VerticalUpperRightBoundry;
+            return roverPosition.X < plateau.HorizontalLowerLeftBoundary 
+                   || roverPosition.X > plateau.HorizontalUpperRightBoundary
+                   || roverPosition.Y < plateau.VerticalLowerLeftBoundary 
+                   || roverPosition.Y > plateau.VerticalUpperRightBoundary;
         }
     }
 }

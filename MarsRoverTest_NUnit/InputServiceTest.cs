@@ -3,15 +3,15 @@ using MarsRoverTunaSarp.Interfaces;
 using MarsRoverTunaSarp.Services;
 using NUnit.Framework;
 using System;
-using System.Collections.Generic;
-using System.Text;
+using MarsRoverTunaSarp.Domain;
+using MarsRoverTunaSarp.Enum;
 
 namespace MarsRoverTest_NUnit
 {
     public class InputServiceTest
     {
         //Arrange
-        IInputService SUT = InputService.Instance;
+        private  readonly IInputService _sut = InputService.Instance;
 
         [Test]
         [TestCase("x g")]
@@ -24,7 +24,7 @@ namespace MarsRoverTest_NUnit
         [TestCase("0 0")] // plateau should not be a dot.
         public void ProcessPlateauInput_InputIsNotValid_ShouldReturnNull(string input)
         {
-            Assert.Throws<ArgumentException>(() => SUT.ProcessPlateauInput(input));
+            Assert.Throws<ArgumentException>(() => _sut.ProcessPlateauInput(input));
         }
 
         [Test]
@@ -32,14 +32,13 @@ namespace MarsRoverTest_NUnit
         public void ProcessPlateauInput_InputIsOk_ShouldReturnPlateau(string input)
         {
             //Act
-            var result = SUT.ProcessPlateauInput(input);
+            var result = _sut.ProcessPlateauInput(input);
             //Assert
             Assert.That(result.GetType(), Is.EqualTo(typeof(Plateau)));
-            Assert.That(result.HorizontalUpperRightBoundry, Is.EqualTo(5));
-            Assert.That(result.VerticalUpperRightBoundry, Is.EqualTo(5));
-            Assert.That(result.HorizontalLowerLeftBoundry, Is.EqualTo(0));
-            Assert.That(result.VerticalLowerLeftBoundry, Is.EqualTo(0));
-
+            Assert.That(result.HorizontalUpperRightBoundary, Is.EqualTo(5));
+            Assert.That(result.VerticalUpperRightBoundary, Is.EqualTo(5));
+            Assert.That(result.HorizontalLowerLeftBoundary, Is.EqualTo(0));
+            Assert.That(result.VerticalLowerLeftBoundary, Is.EqualTo(0));
         }
 
         [Test]
@@ -52,7 +51,7 @@ namespace MarsRoverTest_NUnit
         [TestCase("& % /")]
         public void ProcessRoverCoordinatesInput_InputIsNotValid_ShouldReturnNull(string input)
         {
-            Assert.Throws<ArgumentException>(() => SUT.ProcessRoverPositionInput(input));
+            Assert.Throws<ArgumentException>(() => _sut.ProcessRoverPositionInput(input));
         }
 
         [Test]
@@ -61,7 +60,7 @@ namespace MarsRoverTest_NUnit
         public void ProcessRoverCoordinatesInput_InputIsOk_ShouldReturnProperPosition(string input)
         {
             //Act
-            var result = SUT.ProcessRoverPositionInput(input);
+            var result = _sut.ProcessRoverPositionInput(input);
             //Assert
             Assert.That(result.GetType(), Is.EqualTo(typeof(Position)));
             Assert.That(result.X, Is.EqualTo(1));
@@ -77,7 +76,7 @@ namespace MarsRoverTest_NUnit
         [TestCase("")]
         public void IsRoversExplorationPathInputValid_InputIsNotValid_ShouldReturnNull(string input)
         {
-            Assert.Throws<ArgumentException>(() => SUT.IsRoversExplorationPathInputValid(input));
+            Assert.Throws<ArgumentException>(() => _sut.IsRoversExplorationPathInputValid(input));
         }
 
 
@@ -90,7 +89,7 @@ namespace MarsRoverTest_NUnit
         public void IsRoversExplorationPathInputValid_InputIsOk_ShouldReturnProperly(string input)
         {
             //Act
-            var result = SUT.IsRoversExplorationPathInputValid(input);
+            var result = _sut.IsRoversExplorationPathInputValid(input);
             //Assert
             Assert.That(result, Is.EqualTo(input.Trim().ToUpper()));
         }

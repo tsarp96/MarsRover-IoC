@@ -1,4 +1,5 @@
 ﻿using MarsRoverTunaSarp.ConsoleRetrievers;
+using MarsRoverTunaSarp.Domain;
 
 namespace MarsRoverTunaSarp
 {
@@ -8,7 +9,7 @@ namespace MarsRoverTunaSarp
         {
             MarsRoverControlPanel.Instance.ConsoleRetriever = ConsoleRetriever.Instance;
             MarsRoverControlPanel.Instance.SquadLimit = 2; // In further implementation it can be asked from user
-            MarsRoverControlPanel.Instance.start();
+            MarsRoverControlPanel.Instance.Start();
         }
     }
 }

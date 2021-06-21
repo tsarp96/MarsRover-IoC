@@ -1,31 +1,24 @@
 using NUnit.Framework;
-using MarsRoverTunaSarp;
 using System;
-using MarsRoverTunaSarp.Services;
+using MarsRoverTunaSarp.Domain;
+using MarsRoverTunaSarp.Enum;
 
 namespace MarsRoverTest_NUnit
 {
     public class RoverTest
     {
-        [SetUp]
-        public void Setup()
-        {
-        }
-
         [Test]
         public void CreateRover_PositionIsNull_ShouldThrowNullArgumentException()
         {
-            //Arrange
-            Position position = null;
             // Act & Assert
-            Assert.Throws<ArgumentNullException>(() => new Rover(position));
+            Assert.Throws<ArgumentNullException>(() => new Rover(null));
         }
 
         [Test]
         public void TurnRight_InitialPositionProperlySet_ShouldUpdatePositionCorrectly()
         {
             //Arrange
-            Rover sut = new Rover(new Position(1, 2, (int)Compass.N));
+            var sut = new Rover(new Position(1, 2, (int)Compass.N));
             // Act 
             sut.TurnRight();
             //Assert
@@ -36,7 +29,7 @@ namespace MarsRoverTest_NUnit
         public void TurnLeft_InitialPositionProperlySet_ShouldUpdatePositionCorrectly()
         {
             //Arrange
-            Rover sut = new Rover(new Position(1, 2, (int)Compass.N));
+            var sut = new Rover(new Position(1, 2, (int)Compass.N));
             // Act 
             sut.TurnLeft();
             //Assert
@@ -51,9 +44,9 @@ namespace MarsRoverTest_NUnit
         public void Move_RoverFacingDifferentDirections_ShouldUpdatePositionCorrectly(int direction)
         {
             //Arrange
-            int x = 1;
-            int y = 2;
-            Rover sut = new Rover(new Position(x, y, direction));
+            const int x = 1;
+            const int y = 2;
+            var sut = new Rover(new Position(x, y, direction));
             // Act 
             sut.Move();
             //Assert

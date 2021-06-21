@@ -1,33 +1,28 @@
-﻿using MarsRoverTunaSarp;
-using MarsRoverTunaSarp.ConsoleRetrievers;
-using MarsRoverTunaSarp.Interfaces;
+﻿using MarsRoverTunaSarp.Interfaces;
 using Moq;
 using NUnit.Framework;
-using System;
-using System.IO;
+using MarsRoverTunaSarp.Domain;
 
 namespace MarsRoverTest_NUnit
 {
-    class ControlPanelTest
+    public class ControlPanelTest
     {
 
-        MarsRoverControlPanel SUT = MarsRoverControlPanel.Instance;
+        private readonly MarsRoverControlPanel _sut = MarsRoverControlPanel.Instance;
 
         [Test]
         public void TestCaseA_InputIsOk_ShouldActNormally()
         {
-            //Arrange
-            var SUT = MarsRoverControlPanel.Instance;
-            SUT.SquadLimit = 1; 
+            _sut.SquadLimit = 1; 
             var consoleMock = new Mock<IRetriever>();
             consoleMock.Setup(c => c.GetPlateauInput()).Returns("5 5");
             consoleMock.Setup(c => c.GetRoverPositionInput()).Returns("1 2 N");
             consoleMock.Setup(c => c.GetRouteInput()).Returns("LMLMLMLMM");
-            SUT.ConsoleRetriever = consoleMock.Object;
+            _sut.ConsoleRetriever = consoleMock.Object;
             //Act
-            SUT.start();
+            _sut.Start();
             //Assert
-            Assert.That(SUT.Rovers[0].Position.ToString(), Is.EqualTo("1 3 N"));
+            Assert.That(_sut.Rovers[0].Position.ToString(), Is.EqualTo("1 3 N"));
         }
     }
 }

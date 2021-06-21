@@ -1,39 +1,31 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace MarsRoverTunaSarp
+namespace MarsRoverTunaSarp.Domain
 {
     public class Rover 
     {
-
-        private readonly string id;
-        private Position position;
-
-        public string Id { get => id; }
-        public Position Position { get => position; set => position = value; }
-
+        private string _id;
+        public Position Position { get; }
         public Rover(Position initialPosition)
         {
-            if (initialPosition == null) throw new ArgumentNullException("Initial Position");
-            id = Guid.NewGuid().ToString();
-            Position = initialPosition;
-            Console.WriteLine("Rover with ID : " + id + " has been declared on plateau, initial position : " + position.ToString());
+            _id = Guid.NewGuid().ToString();
+            this.Position = initialPosition ?? throw new ArgumentNullException("Initial Position");
+            Console.WriteLine("Rover with ID : " + _id + " has been declared on plateau, initial position : " + Position.ToString());
         }
 
         public void TurnRight()
         {
-            position.Rotate90Degree();
+            Position.Rotate90Degree();
         }
 
         public void TurnLeft()
         {
-            position.RotateMinus90Degree();
+            Position.RotateMinus90Degree();
         }
 
         public void Move()
         {
-            position.Move();
+            Position.Move();
         }
 
     }

@@ -9,30 +9,30 @@ namespace MarsRoverTunaSarp.ConsoleRetrievers
     {
 
         private ConsoleRetriever() { }
-        private static ConsoleRetriever instance = null;
+        private static ConsoleRetriever _instance = null;
         public static ConsoleRetriever Instance
         {
             get
             {
-                if (instance == null)
+                if (_instance == null)
                 {
-                    instance = new ConsoleRetriever();
+                    _instance = new ConsoleRetriever();
                 }
-                return instance;
+                return _instance;
             }
         }
 
-        public virtual string GetPlateauInput()
+        public string GetPlateauInput()
         {
             return Console.ReadLine();
         }
 
-        public virtual string GetRoverPositionInput()
+        public string GetRoverPositionInput()
         {
             return Console.ReadLine();
         }
 
-        public virtual string GetRouteInput()
+        public string GetRouteInput()
         {
             return Console.ReadLine();
         }

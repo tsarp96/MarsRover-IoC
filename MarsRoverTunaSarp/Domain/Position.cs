@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using MarsRoverTunaSarp.Enum;
 
-namespace MarsRoverTunaSarp
+namespace MarsRoverTunaSarp.Domain
 {
     public class Position
     {
-        public int X { get; set; }
-        public int Y { get; set; }
-        public int Direction { get; set; }
+        public int X { get; private set; }
+        public int Y { get; private set; }
+        public int Direction { get; private set; }
 
         public Position(int x, int y, int direction)
         {

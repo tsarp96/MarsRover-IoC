@@ -1,4 +1,4 @@
-﻿namespace MarsRoverTunaSarp
+﻿namespace MarsRoverTunaSarp.Enum
 {
     public enum Compass
     {
