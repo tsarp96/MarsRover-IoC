@@ -7,20 +7,7 @@ namespace MarsRoverTunaSarp.ConsoleRetrievers
 {
     public class ConsoleRetriever : IRetriever
     {
-
-        private ConsoleRetriever() { }
-        private static ConsoleRetriever _instance = null;
-        public static ConsoleRetriever Instance
-        {
-            get
-            {
-                if (_instance == null)
-                {
-                    _instance = new ConsoleRetriever();
-                }
-                return _instance;
-            }
-        }
+        public ConsoleRetriever() { }
 
         public string GetPlateauInput()
         {
