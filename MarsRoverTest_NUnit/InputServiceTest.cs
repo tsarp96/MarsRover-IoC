@@ -12,7 +12,7 @@ namespace MarsRoverTest_NUnit
     public class InputServiceTest
     {
         //Arrange
-        private readonly IInputService _sut;
+        private readonly IInputService _sut = new InputService();
 
         [Test]
         [TestCase("x g")]
@@ -25,9 +25,7 @@ namespace MarsRoverTest_NUnit
         [TestCase("0 0")]
         public void ProcessPlateauInput_InputIsNotValid_ShouldReturnNull(string input)
         {
-            var service = new Mock<IInputService>();
-            service.Setup(i => i.ProcessPlateauInput(input)).Throws(new ArgumentException());
-            Assert.Throws<ArgumentException>(() => service.Object.ProcessPlateauInput(input));
+            Assert.Throws<ArgumentException>(() => _sut.ProcessPlateauInput(input));
         }
 
         [Test]

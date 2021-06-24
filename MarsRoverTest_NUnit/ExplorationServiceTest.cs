@@ -9,7 +9,7 @@ namespace MarsRoverTest_NUnit
 {
     public class ExplorationServiceTest
     {
-        private readonly IExplorationService _sut;
+        private readonly IExplorationService _sut = new ExplorationService();
         
         [OneTimeTearDown]
         public void RunAfterAnyTests()
