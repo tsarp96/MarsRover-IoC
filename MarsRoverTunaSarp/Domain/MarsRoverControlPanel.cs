@@ -29,7 +29,7 @@ namespace MarsRoverTunaSarp.Domain
             _rovers = new List<Rover>();
         }
 
-        public void Start()
+        public PanelResult Start()
         {
             Console.WriteLine("Welcome to Mars Rover Panel");
 
@@ -42,7 +42,7 @@ namespace MarsRoverTunaSarp.Domain
                 Console.WriteLine(e.Message);
                 Console.WriteLine("------------------------!!!-------------------------------");
                 Console.WriteLine("Please restart the program");
-                return;
+                return PanelResult.Fail;
             }
 
             for (int i = 0; i<_squadLimit; i++)
@@ -59,7 +59,7 @@ namespace MarsRoverTunaSarp.Domain
                     Console.WriteLine(e.Message);
                     Console.WriteLine("------------------------!!!-------------------------------");
                     Console.WriteLine("Please restart the program");
-                    return;
+                    return PanelResult.Fail;
                 }
 
                 try
@@ -72,7 +72,7 @@ namespace MarsRoverTunaSarp.Domain
                     Console.WriteLine(e.Message);
                     Console.WriteLine("------------------------!!!-------------------------------");
                     Console.WriteLine("Please restart the program");
-                    return;
+                    return PanelResult.Fail;
                 }
 
                 var result = _explorationService.TraceRoute();
@@ -83,11 +83,8 @@ namespace MarsRoverTunaSarp.Domain
                 Console.WriteLine("\n \t \t \t \t >> Final position for the {0}. rover : " + _rovers[i].Position + " <<" , _rovers.Count);
                 Console.WriteLine("---------------------------------------");
 
-                if (_rovers.Count == 2) 
-                {
-                    break;
-                }
             }
+            return PanelResult.Success;
         }
 
         private string RetrieveAndPrepareRouteFromConsole()
