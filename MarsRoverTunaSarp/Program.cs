@@ -1,6 +1,7 @@
 ﻿using MarsRoverTunaSarp.ConsoleRetrievers;
 using MarsRoverTunaSarp.Domain;
 using MarsRoverTunaSarp.Interfaces;
+using MarsRoverTunaSarp.Services;
 using Unity;
 using Unity.Injection;
 
@@ -10,12 +11,13 @@ namespace MarsRoverTunaSarp
     {
         static void Main(string[] args)
         {
+            const int _squadLimit = 2;
             IUnityContainer container = new UnityContainer();
 
-
             container.RegisterType<IRetriever, ConsoleRetriever>("console",TypeLifetime.ContainerControlled);
+            container.RegisterType<IExplorationService, ExplorationService>(TypeLifetime.ContainerControlled);
 
-            container.RegisterType<MarsRoverControlPanel>("panel", new InjectionConstructor(container.Resolve<IRetriever>("console"), 2));
+            container.RegisterType<MarsRoverControlPanel>("panel", new InjectionConstructor(container.Resolve<IRetriever>("console"), container.Resolve<IExplorationService>(), _squadLimit));
 
             container.Resolve<MarsRoverControlPanel>("panel").Start();
         }

@@ -15,10 +15,13 @@ namespace MarsRoverTunaSarp.Domain
 
         private IRetriever _consoleRetriever;
 
+        private IExplorationService _explorationService;
+
         [InjectionConstructor]
-        public MarsRoverControlPanel(IRetriever retriever, int squadlimit)
+        public MarsRoverControlPanel(IRetriever retriever, IExplorationService explorationService, int squadlimit)
         {
             _consoleRetriever = retriever;
+            _explorationService = explorationService;
             _squadLimit = squadlimit;
             _rovers = new List<Rover>();
         }
@@ -29,7 +32,7 @@ namespace MarsRoverTunaSarp.Domain
 
             try
             {
-                ExplorationService.Instance.Plateau = RetrieveAndPreparePlateauFromConsole();
+                _explorationService.UpdatePlateau(RetrieveAndPreparePlateauFromConsole());
             }
             catch (Exception e)
             {
@@ -46,7 +49,7 @@ namespace MarsRoverTunaSarp.Domain
                 {
                     var rover = new Rover(RetrieveAndPreparePositionFromConsole());
                     _rovers.Add(rover);
-                    ExplorationService.Instance.Rover = rover;
+                    _explorationService.UpdateRover(rover);
                 }
                 catch (Exception e)
                 {
@@ -59,7 +62,7 @@ namespace MarsRoverTunaSarp.Domain
                 try
                 {
 
-                    ExplorationService.Instance.Route = RetrieveAndPrepareRouteFromConsole();
+                    _explorationService.UpdateRoute(RetrieveAndPrepareRouteFromConsole());
                 }
                 catch (Exception e)
                 {
@@ -69,7 +72,7 @@ namespace MarsRoverTunaSarp.Domain
                     return;
                 }
 
-                var result = ExplorationService.Instance.TraceRoute();
+                var result = _explorationService.TraceRoute();
                 if (result == ExplorationResult.BoundaryBreachDetected)
                 {
                     Console.WriteLine("Boundary breach detected, rover stays in place.");

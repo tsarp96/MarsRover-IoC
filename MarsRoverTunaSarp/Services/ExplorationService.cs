@@ -6,46 +6,31 @@ namespace MarsRoverTunaSarp.Services
 {
     public class ExplorationService : IExplorationService
     {
-        public Rover Rover { get; set; }
-        public string Route { get; set; }
-        public Plateau Plateau { get; set; }
-
-        private ExplorationService() { }
-        private static ExplorationService _instance = null;
-        public static ExplorationService Instance
-        {
-            get
-            {
-                if (_instance == null)
-                {
-                    _instance = new ExplorationService();
-                }
-                return _instance;
-            }
-        }
-
+        private Rover _rover;
+        private string _route;
+        private Plateau _plateau;
 
         public ExplorationResult TraceRoute()
         {
-            foreach (var ch in Route.ToCharArray())
+            foreach (var ch in _route.ToCharArray())
             {
                 if (ch.Equals('L'))
                 {
-                    Rover.TurnLeft();
+                    _rover.TurnLeft();
                     continue;
                 }
                 if (ch.Equals('R'))
                 {
-                    Rover.TurnRight();
+                    _rover.TurnRight();
                     continue;
                 }
                 if (ch.Equals('M'))
                 {
-                    if (IsGoingToBeInPlateauAfterMovement(Rover.Position, Plateau))
+                    if (IsGoingToBeInPlateauAfterMovement(_rover.Position, _plateau))
                     {
                         return ExplorationResult.BoundaryBreachDetected;
                     }
-                    Rover.Move();
+                    _rover.Move();
                 }
             }
             return ExplorationResult.Success;
@@ -64,6 +49,21 @@ namespace MarsRoverTunaSarp.Services
                    || roverPosition.X > plateau.HorizontalUpperRightBoundary
                    || roverPosition.Y < plateau.VerticalLowerLeftBoundary 
                    || roverPosition.Y > plateau.VerticalUpperRightBoundary;
+        }
+
+        public void UpdateRover(Rover rover)
+        {
+            _rover = rover;
+        }
+
+        public void UpdatePlateau(Plateau plateau)
+        {
+            _plateau = plateau;
+        }
+
+        public void UpdateRoute(string route)
+        {
+            _route = route;
         }
     }
 }
