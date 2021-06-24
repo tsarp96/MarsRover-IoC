@@ -7,7 +7,7 @@ using Unity;
 
 namespace MarsRoverTunaSarp.Domain
 {
-    public class MarsRoverControlPanel
+    public class MarsRoverControlPanel : IControlPanel
     {
         private List<Rover> _rovers { get; }
 
@@ -120,6 +120,16 @@ namespace MarsRoverTunaSarp.Domain
             var plateau = _inputService.ProcessPlateauInput(upperRightCoordinatesInput);
             Console.WriteLine("--------------------------->");
             return plateau;
+        }
+
+        public void UpdateSquadLimit(int limit)
+        {
+            _squadLimit = limit;
+        }
+
+        public List<Rover> GetRovers()
+        {
+            return _rovers;
         }
     }
 }
