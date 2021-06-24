@@ -16,8 +16,11 @@ namespace MarsRoverTunaSarp
 
             container.RegisterType<IRetriever, ConsoleRetriever>("console",TypeLifetime.ContainerControlled);
             container.RegisterType<IExplorationService, ExplorationService>(TypeLifetime.ContainerControlled);
+            container.RegisterType<IInputService, InputService>(TypeLifetime.ContainerControlled);
 
-            container.RegisterType<MarsRoverControlPanel>("panel", new InjectionConstructor(container.Resolve<IRetriever>("console"), container.Resolve<IExplorationService>(), _squadLimit));
+            container.RegisterType<MarsRoverControlPanel>("panel", new InjectionConstructor(container.Resolve<IRetriever>("console"), 
+                                                                                                container.Resolve<IExplorationService>(), 
+                                                                                                    container.Resolve<IInputService>() ,  _squadLimit));
 
             container.Resolve<MarsRoverControlPanel>("panel").Start();
         }

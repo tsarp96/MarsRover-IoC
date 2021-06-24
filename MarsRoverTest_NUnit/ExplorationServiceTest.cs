@@ -3,12 +3,13 @@ using MarsRoverTunaSarp.Enum;
 using MarsRoverTunaSarp.Services;
 using NUnit.Framework;
 using MarsRoverTunaSarp.Domain;
+using MarsRoverTunaSarp.Interfaces;
 
 namespace MarsRoverTest_NUnit
 {
     public class ExplorationServiceTest
     {
-        private readonly ExplorationService  _sut = ExplorationService.Instance;
+        private readonly IExplorationService _sut;
         
         [OneTimeTearDown]
         public void RunAfterAnyTests()
@@ -23,9 +24,9 @@ namespace MarsRoverTest_NUnit
             var plateau = new Plateau(5, 5);
             var rover = new Rover(new Position(0, 0, (int)Compass.S));
             const string route = "MLM";
-            _sut.Rover = rover;
-            _sut.Plateau = plateau;
-            _sut.Route = route;
+            _sut.UpdateRover(rover);
+            _sut.UpdatePlateau(plateau);
+            _sut.UpdateRoute(route);
             
             //Act & Assert
             Assert.That(_sut.TraceRoute(), Is.EqualTo(ExplorationResult.BoundaryBreachDetected));
@@ -39,9 +40,9 @@ namespace MarsRoverTest_NUnit
             var plateau = new Plateau(5, 5);
             var rover = new Rover(new Position(1, 2, (int)Compass.N));
             const  string route = "LMLMLMLMMR";
-            _sut.Rover = rover;
-            _sut.Plateau = plateau;
-            _sut.Route = route;
+            _sut.UpdateRover(rover);
+            _sut.UpdatePlateau(plateau);
+            _sut.UpdateRoute(route);
             //Act
             _sut.TraceRoute();
             //Assert
@@ -52,9 +53,9 @@ namespace MarsRoverTest_NUnit
         }
         private void ResetSut()
         {
-            _sut.Rover = null;
-            _sut.Plateau = null;
-            _sut.Route = null;
+            _sut.UpdateRover(null);
+            _sut.UpdatePlateau(null);
+            _sut.UpdateRoute(null);
         }
 
     }

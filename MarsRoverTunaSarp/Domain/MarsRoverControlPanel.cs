@@ -17,12 +17,15 @@ namespace MarsRoverTunaSarp.Domain
 
         private IExplorationService _explorationService;
 
+        private IInputService _inputService;
+
         [InjectionConstructor]
-        public MarsRoverControlPanel(IRetriever retriever, IExplorationService explorationService, int squadlimit)
+        public MarsRoverControlPanel(IRetriever retriever, IExplorationService explorationService, IInputService inputService, int squadlimit)
         {
             _consoleRetriever = retriever;
             _explorationService = explorationService;
             _squadLimit = squadlimit;
+            _inputService = inputService;
             _rovers = new List<Rover>();
         }
 
@@ -93,7 +96,7 @@ namespace MarsRoverTunaSarp.Domain
             Console.WriteLine("[ 'L': Rotate -90 Degree, 'R: Rotate +90 Degree', 'M': Move one unit ]");
             Console.WriteLine("(ex: '<series of capital letters>' like : 'LLMMMRMMLMLLMRRMMM') :");
             var explorationRouteInput = _consoleRetriever.GetRouteInput();
-            var route = InputService.Instance.IsRoversExplorationPathInputValid(explorationRouteInput);
+            var route = _inputService.IsRoversExplorationPathInputValid(explorationRouteInput);
             Console.WriteLine("--------------------------->");
             return route;
         }
@@ -105,7 +108,7 @@ namespace MarsRoverTunaSarp.Domain
             Console.WriteLine("(ex: <number> <number> <direction> like : '1 2 N') :");
 
             var initialRoverPositionInput = _consoleRetriever.GetRoverPositionInput();
-            var position = InputService.Instance.ProcessRoverPositionInput(initialRoverPositionInput);
+            var position = _inputService.ProcessRoverPositionInput(initialRoverPositionInput);
             Console.WriteLine("--------------------------->");
             return position;
         }
@@ -114,7 +117,7 @@ namespace MarsRoverTunaSarp.Domain
         {
             Console.WriteLine("Please provide upper-right coordinates(x,y) of the plateau : (ex: <positive number> <positive number> like : '5 5' )");
             var upperRightCoordinatesInput = _consoleRetriever.GetPlateauInput();
-            var plateau = InputService.Instance.ProcessPlateauInput(upperRightCoordinatesInput);
+            var plateau = _inputService.ProcessPlateauInput(upperRightCoordinatesInput);
             Console.WriteLine("--------------------------->");
             return plateau;
         }

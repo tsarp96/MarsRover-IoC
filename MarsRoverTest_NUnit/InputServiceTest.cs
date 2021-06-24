@@ -11,7 +11,7 @@ namespace MarsRoverTest_NUnit
     public class InputServiceTest
     {
         //Arrange
-        private  readonly IInputService _sut = InputService.Instance;
+        private readonly IInputService _sut;
 
         [Test]
         [TestCase("x g")]

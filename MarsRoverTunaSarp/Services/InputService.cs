@@ -8,20 +8,7 @@ using MarsRoverTunaSarp.Enum;
 namespace MarsRoverTunaSarp.Services
 {
     public class InputService : IInputService
-    {
-        private InputService() { }
-        private static InputService _instance = null;
-        public static InputService Instance
-        {
-            get
-            {
-                if (_instance == null)
-                {
-                    _instance = new InputService();
-                }
-                return _instance;
-            }
-        }
+    {   
         public Plateau ProcessPlateauInput(string input)
         {
             var result = new int[2];
