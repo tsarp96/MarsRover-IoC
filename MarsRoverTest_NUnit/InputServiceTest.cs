@@ -5,6 +5,7 @@ using NUnit.Framework;
 using System;
 using MarsRoverTunaSarp.Domain;
 using MarsRoverTunaSarp.Enum;
+using Moq;
 
 namespace MarsRoverTest_NUnit
 {
@@ -21,10 +22,12 @@ namespace MarsRoverTest_NUnit
         [TestCase(" ")]
         [TestCase("-5 -5")]
         [TestCase("& %")]
-        [TestCase("0 0")] // plateau should not be a dot.
+        [TestCase("0 0")]
         public void ProcessPlateauInput_InputIsNotValid_ShouldReturnNull(string input)
         {
-            Assert.Throws<ArgumentException>(() => _sut.ProcessPlateauInput(input));
+            var service = new Mock<IInputService>();
+            service.Setup(i => i.ProcessPlateauInput(input)).Throws(new ArgumentException());
+            Assert.Throws<ArgumentException>(() => service.Object.ProcessPlateauInput(input));
         }
 
         [Test]

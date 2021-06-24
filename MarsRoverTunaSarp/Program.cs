@@ -23,7 +23,7 @@ namespace MarsRoverTunaSarp
                                                                                                 container.Resolve<IExplorationService>(), 
                                                                                                     container.Resolve<IInputService>() ,  _squadLimit));
 
-            container.Resolve<IControlPanel>("panel").Start();
+            container.Resolve<MarsRoverControlPanel>("panel").Start();
         }
     }
 }
